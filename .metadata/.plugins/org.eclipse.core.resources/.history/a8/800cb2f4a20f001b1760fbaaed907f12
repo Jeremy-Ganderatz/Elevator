@@ -1,0 +1,10 @@
+package objects;
+
+import java.util.TimerTask;
+
+public class Print extends TimerTask{
+
+	public void run() {
+	       System.out.println("Hello World!"); 
+	    }
+}

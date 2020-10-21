@@ -1,0 +1,30 @@
+package objects;
+
+public class Building {
+
+	private static final int positivesFloors = 10;
+	private static final int startPosition = 0;
+	private static final int negativesFloors = -2;
+	private static final int totalFloors = positiveFloors + Math.abs(negativesFloors) + 1;
+
+	public Building() {
+
+	}
+
+	public static int getPositivesfloors() {
+		return positivesFloors;
+	}
+
+	public static int getNegativesfloors() {
+		return negativesFloors;
+	}
+
+	public static int getTotalfloors() {
+		return totalFloors;
+	}
+
+	public static int getStartposition() {
+		return startPosition;
+	}
+
+}

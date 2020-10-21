@@ -1,0 +1,15 @@
+package objects;
+
+public class Users {
+	
+	private int nbOfUsers = 0;
+
+	public int getNbOfUsers() {
+		return nbOfUsers;
+	}
+
+	public void setNbOfUsers(int nbOfUsers) {
+		this.nbOfUsers = nbOfUsers;
+	}
+
+}

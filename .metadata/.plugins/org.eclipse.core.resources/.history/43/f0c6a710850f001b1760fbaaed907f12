@@ -1,0 +1,11 @@
+package Service;
+
+public class Scenario {
+	
+	public void GenerateScenario() {
+		
+		
+		
+	}
+
+}

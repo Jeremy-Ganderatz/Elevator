@@ -1,0 +1,36 @@
+package Service;
+
+import java.util.Random;
+
+import objects.Building;
+import objects.Elevator;
+
+public class Scenario {
+	
+	
+	
+	public static int[] GenerateRandomUsers() {
+		
+		Random randomUsers = new Random();
+		int low = 0;
+		int high = Elevator.getMaximumusers() + 1;
+		int nbOfUsers = randomUsers.nextInt(high-low) + low;
+		int result[] = new int[nbOfUsers];
+		for (int i = 0; i < result.length; i++) {
+			result[i] = GenerateRandomStair();
+		}
+		return result;
+		
+	}
+	
+	public static int GenerateRandomStair() {
+		
+		Random randomStair = new Random();
+		int low = -2;
+		int high = Building.getPositivestairs() + 1;
+		int stairNumber = randomStair.nextInt(high-low) + low;
+		return stairNumber;
+		
+	}
+
+}

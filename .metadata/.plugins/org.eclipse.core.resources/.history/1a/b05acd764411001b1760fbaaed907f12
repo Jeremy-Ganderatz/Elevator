@@ -1,0 +1,104 @@
+import java.util.TreeSet;
+
+public class Elevator {
+	
+	private static Elevator elevator = null;
+    private static TreeSet<Integer> requestSet = new TreeSet<Integer>();
+    private int currentFloor = 0;
+
+    private Direction direction = Direction.UP;
+
+    private Elevator() {
+    }
+
+    /**
+     * @return singleton instance
+     */
+    static Elevator getInstance() {
+        if (elevator == null) {
+            elevator = new Elevator();
+        }
+        return elevator;
+    }
+
+    /**
+     * Add request to Set
+     * 
+     * @param floor
+     */
+    public synchronized void addFloor(int f) {
+        requestSet.add(f);
+        // Notify the thread that a new request has come.
+        notify();
+    }
+
+    /**
+     * @return next request to process based on elevator current floor and
+     *         direction
+     */
+    public synchronized int nextFloor() {
+
+        Integer floor = null;
+
+        if (direction == Direction.UP) {
+            if (requestSet.ceiling(currentFloor) != null) {
+                floor = requestSet.ceiling(currentFloor);
+            } else {
+                floor = requestSet.floor(currentFloor);
+            }
+        } else {
+            if (requestSet.floor(currentFloor) != null) {
+                floor = requestSet.floor(currentFloor);
+            } else {
+                floor = requestSet.ceiling(currentFloor);
+            }
+        }
+        if (floor == null) {
+            try {
+                System.out.println("No Request to process. Waiting");
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Processing Request : " + floor);
+            requestSet.remove(floor);
+        }
+        return (floor == null) ? -1 : floor;
+    }
+
+    public int getCurrentFloor() {
+        return currentFloor;
+    }
+
+    /**
+     * Set current floor and direction based on requested floor
+     * 
+     * @param currentFloor
+     */
+    public void setCurrentFloor(int currentFloor) {
+        if (this.currentFloor > currentFloor) {
+            setDirection(Direction.DOWN);
+        } else {
+            setDirection(Direction.UP);
+        }
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        this.currentFloor = currentFloor;
+        System.out.println("Floor : " + currentFloor);
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
+}
+
+

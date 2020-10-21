@@ -1,0 +1,56 @@
+package objects;
+
+public class Elevator {
+	
+	private int totalStairs = Building.getTotalstairs();
+	
+	
+	private static final int maximumUsers = 5;
+	private boolean positionDoor = false; //closed
+	private int currentPosition;
+	private String controlPanel[] = new String[totalStairs];
+	
+
+	
+	
+	public Elevator(int totalStairs, boolean positionDoor, int currentPosition, String[] controlPanel) {
+		super();
+		this.totalStairs = totalStairs;
+		this.positionDoor = positionDoor;
+		this.currentPosition = currentPosition;
+		this.controlPanel = controlPanel;
+	}
+
+	public static int getMaximumUsers() {
+		return maximumUsers;
+	}
+	
+	public boolean isPositionDoor() {
+		return positionDoor;
+	}
+	public void setPositionDoor(boolean positionDoor) {
+		this.positionDoor = positionDoor;
+	}
+	
+	public int getCurrentPosition() {
+		return currentPosition;
+	}
+	public void setCurrentPosition(int currentPosition) {
+		this.currentPosition = currentPosition;
+	}
+
+	public String[] getControlPanel() {
+		return controlPanel;
+	}
+	public String[] setControlPanel(int totalStairs, int bottomStair) {
+		int nb = bottomStair;
+		String controlPanel[] = new String[totalStairs];
+		for (int i = 0; i < totalStairs; i++) {
+			controlPanel[i] = String.valueOf(nb);
+			nb++;
+		}
+		return controlPanel;
+	}
+	
+	
+}

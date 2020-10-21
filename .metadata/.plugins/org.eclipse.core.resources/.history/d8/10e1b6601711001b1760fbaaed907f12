@@ -1,0 +1,31 @@
+import static java.lang.Thread.currentThread;
+
+public class ThreadStopTest {
+	public static void main(String args[]) throws InterruptedException {
+		Elevator elevator = new Elevator(); // implement Elevator
+		
+		Thread elevatorThread = new Thread(elevator, "T1"); // define a new thread for elevator
+		elevatorThread.start(); // starting the thread for elevator who print ""The elevator thread is running""
+		
+		System.out.println(currentThread().getName() + " is stopping elevator thread");
+		elevator.stop(); 
+		
+		Thread.sleep(2000);
+		System.out.println(currentThread().getName() + " is finished now");
+	}
+}
+
+class Elevator implements Runnable {
+	private volatile boolean exit = false;
+
+	public void run() {
+		while (!exit) {
+			System.out.println("The elevator thread is running");
+		}
+		System.out.println("The elevator thread is now stopped");
+	}
+
+	public void stop() {
+		exit = true;
+	}
+}

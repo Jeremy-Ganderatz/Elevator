@@ -1,0 +1,16 @@
+package objects;
+
+public class OrderedStair {
+	
+	
+	
+	
+	public void goUp() {
+		
+	}
+	
+	public void goDown() {
+		
+	}
+
+}

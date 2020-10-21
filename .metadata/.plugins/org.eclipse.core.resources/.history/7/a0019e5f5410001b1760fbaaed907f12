@@ -1,0 +1,31 @@
+package objects;
+
+public class Building {
+	
+	private static final int positiveStairs = 10;
+	private static final int startPosition = 0;
+	private static final int negativeStairs = -1;
+	private static final int totalStairs = positiveStairs + Math.abs(negativeStairs) + 1;
+	
+
+	public Building() {
+		
+	}
+
+	public static int getPositivestairs() {
+		return positiveStairs;
+	}
+
+	public static int getStartposition() {
+		return startPosition;
+	}
+
+	public static int getNegativestairs() {
+		return negativeStairs;
+	}
+
+	public static int getTotalstairs() {
+		return totalStairs;
+	}
+	
+}

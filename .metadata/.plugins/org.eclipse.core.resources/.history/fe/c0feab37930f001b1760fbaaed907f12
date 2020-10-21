@@ -1,0 +1,16 @@
+package objects;
+
+public class MoveElevator {
+	
+	
+	
+	
+	public void goUp() {
+		
+	}
+	
+	public void goDown() {
+		
+	}
+
+}

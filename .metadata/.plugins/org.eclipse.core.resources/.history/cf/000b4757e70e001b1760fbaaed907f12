@@ -1,0 +1,37 @@
+package objects;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Elevator {
+	
+	private static final int maximumUsers = 5;
+	private boolean positionDoor = false;
+	private int elevatorPosition[ ] = new int[10];
+	private int keyBoard[] = new int[10];
+	
+	
+	public static int getMaximumusers() {
+		return maximumUsers;
+	}
+	public boolean isPositionDoor() {
+		return positionDoor;
+	}
+	public void setPositionDoor(boolean positionDoor) {
+		this.positionDoor = positionDoor;
+	}
+	public int[] getElevatorPosition() {
+		return elevatorPosition;
+	}
+	public void setElevatorPosition(int[] elevatorPosition) {
+		this.elevatorPosition = elevatorPosition;
+	}
+	public int[] getKeyBoard() {
+		return keyBoard;
+	}
+	public void setKeyBoard(int[] keyBoard) {
+		this.keyBoard = keyBoard;
+	}
+	
+	
+}

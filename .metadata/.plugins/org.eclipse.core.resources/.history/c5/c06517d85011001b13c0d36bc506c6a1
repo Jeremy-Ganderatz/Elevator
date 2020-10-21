@@ -1,0 +1,20 @@
+package Threads;
+
+
+public class ElevatorMovingThread implements Runnable{
+
+	private volatile boolean exit = false;
+
+	public void run() {
+		while (!exit) {
+			
+			System.out.println("The elevator thread is running");
+		}
+		System.out.println("The elevator thread is now stopped");
+	}
+
+	public void stop() {
+		exit = true;
+	}
+
+}

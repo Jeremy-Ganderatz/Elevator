@@ -1,0 +1,80 @@
+import java.util.Arrays;
+import java.util.Scanner;
+import Service.MoveElevator;
+import Service.Scenario;
+import objects.Building;
+import objects.Elevator;
+
+public class ElevatorRun {
+
+	public static void main(String[] args) throws InterruptedException {
+
+		Scanner myObj = new Scanner(System.in);
+		System.out.println("");
+		System.out.println("               -------------------------------------             ");
+		System.out.println("             -----------------------------------------             ");
+		System.out.println("               -------------------------------------             ");
+		System.out.println("");
+		System.out.println("WELCOME TO MY ELEVATOR PROGRAM, YOU CAN SEE BELOW THERE IS A GENERATED SCENARIO");
+
+		int yourFloor = Scenario.GenerateRandomFloor();
+		System.out.println("You are at the floor number : " + yourFloor);
+		int[] users = Scenario.GenerateRandomUsers();
+		
+		if (users.length == 0) {
+			System.out.println("Elevator is empty");
+		} else  {
+		System.out.println("There is : " + users.length + " persons in the elevator");
+		}
+		
+		Elevator elevator = Elevator.getInstance();
+		String[] result = elevator.setControlPanel(Building.getTotalfloors(), Building.getNegativesfloors());
+
+		MoveElevator.SwitchPositionDoor(true);
+		if (!MoveElevator.CheckingPositionDoor()) {
+			System.out.println("Door is closed wait...");
+			MoveElevator.SwitchPositionDoor(true);
+		}
+
+		System.out.println("----///Door is OPEN///----");
+		if (users.length > 0) {
+			System.out.println(
+					"You inside now and see the floors others users want to reach : " + Arrays.toString(users));
+			System.out.println("");
+		}
+
+		System.out.println("");
+		System.out.println("Select the floor number you want to reach :");
+		System.out.println("Control panel : " + Arrays.toString(result));
+
+		String floorToReach = myObj.nextLine();
+
+		System.out.println("you go to : " + floorToReach);
+		MoveElevator.SwitchPositionDoor(false);
+		
+		int floorYouWantToReach = Integer.parseInt(floorToReach);
+		
+		if (!MoveElevator.CheckingPositionDoor()) {
+			System.out.println("---///Door is CLOSED///---");
+
+			if (yourFloor < floorYouWantToReach) {
+				MoveElevator.goUp(floorYouWantToReach, yourFloor, users);
+			} else {
+				MoveElevator.goDown(floorYouWantToReach, yourFloor, users);
+			}
+
+		} else {
+			System.out.println("Door is still open .. Wait");
+			MoveElevator.SwitchPositionDoor(false);
+			System.out.println("---///Door is CLOSED///---");
+			if (yourFloor < floorYouWantToReach) {
+				MoveElevator.goUp(floorYouWantToReach, yourFloor, users);
+			} else {
+				MoveElevator.goDown(floorYouWantToReach, yourFloor, users);
+			}
+		}
+
+		myObj.close();
+	}
+
+}

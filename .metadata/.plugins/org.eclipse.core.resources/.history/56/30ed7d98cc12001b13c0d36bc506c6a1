@@ -1,0 +1,117 @@
+package Service;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+import objects.Elevator;
+
+public abstract class MoveElevator implements Runnable {
+
+	public static void goUp(String floorToReach, int yourFloor, int[] users) {
+		Timer timer = new Timer();
+		int begin = 1500;
+		int timeInterval = 1000;
+		timer.schedule(new TimerTask() {
+			int counter = 0;
+			int actualFloor = yourFloor;
+
+			@Override
+			public void run() {
+				if (checkingUsersOrders(users, actualFloor)) {
+					OthersUsersGoingOut(actualFloor);
+				} else {
+					System.out.println("floor : " + actualFloor);
+				}
+				actualFloor++;
+
+				if (counter == Math.abs(yourFloor - Integer.parseInt(floorToReach))) {
+					MainUserReachHisFloor(Integer.parseInt(floorToReach));
+					timer.cancel();
+				}
+				counter++;
+			}
+		}, begin, timeInterval);
+	}
+
+	public static void goDown(String floorToReach, int yourFloor, int[] users) {
+		Timer timer = new Timer();
+		int begin = 1000;
+		int timeInterval = 1000;
+		timer.schedule(new TimerTask() {
+			int counter = 0;
+			int actualFloor = yourFloor;
+
+			@Override
+			public void run() {
+				if (checkingUsersOrders(users, actualFloor) == true) {
+					OthersUsersGoingOut(actualFloor);
+				} else {
+					System.out.println("floor : " + actualFloor);
+				}
+
+				actualFloor--;
+
+				if (counter == Math.abs(yourFloor - Integer.parseInt(floorToReach))) {
+					MainUserReachHisFloor(Integer.parseInt(floorToReach));
+					timer.cancel();
+				}
+				counter++;
+			}
+		}, begin, timeInterval);
+	}
+
+	public static boolean checkingOtherUsersOrders(int[] board, int actualFloor) {
+		int z = 0;
+		for (int i : board)
+			if (i == actualFloor) {
+				z = 1;
+			}
+		if (z == 1) {
+			return true;
+		}
+		return false;
+	}
+
+	public static void OthersUsersGoingOut(int actualFloor) {
+
+		SwitchPositionDoor(true);
+		if (!CheckingPositionDoor()) {
+			System.out.println("Door still close just wait...");
+		}
+		System.out.println("---///Door is open///---");
+		System.out.println("User(s) is getting out at floor " + actualFloor + " /// say Bye!!");
+		SwitchPositionDoor(false);
+		if (CheckingPositionDoor()) {
+			System.out.println("Door still open just wait...");
+			SwitchPositionDoor(false);
+		}
+		System.out.println("---///Door is closed///---");
+	}
+
+	public static void MainUserReachHisFloor(int floorToReach) {
+		SwitchPositionDoor(true);
+		if (!CheckingPositionDoor()) {
+			System.out.println("Door still close just wait...");
+		}
+		System.out.println("---///Door is open///---");
+		System.out.println("YOU ARRIVE AT FLOOR NUMBER : " + floorToReach + "  --- Bye Bye !!! ---");
+		SwitchPositionDoor(false);
+		if (CheckingPositionDoor()) {
+			System.out.println("Door still open just wait...");
+			SwitchPositionDoor(false);
+		}
+		System.out.println("---///Door is closed///---");
+	}
+
+	public static void SwitchPositionDoor(boolean doorPosition) {
+		Elevator.getInstance().setPositionDoor(doorPosition);
+	}
+
+	public static boolean CheckingPositionDoor() {
+		if (Elevator.getInstance().isPositionDoor()) {
+			return true;
+		}
+		return false;
+	}
+
+}

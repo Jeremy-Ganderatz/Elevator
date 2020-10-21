@@ -1,0 +1,16 @@
+package objects;
+
+import java.util.TimerTask;
+
+public class Print extends TimerTask{
+
+	public void running(int stair) {
+	       System.out.println(stair); 
+	    }
+
+	
+	public void run() {
+		// TODO Auto-generated method stubs
+		
+	}
+}

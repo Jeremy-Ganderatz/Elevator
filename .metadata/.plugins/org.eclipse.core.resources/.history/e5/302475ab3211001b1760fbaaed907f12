@@ -1,0 +1,101 @@
+import java.util.Arrays;
+import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import Service.Scenario;
+import objects.Building;
+import objects.Elevator;
+import objects.MoveElevator;
+
+public class ElevatorRun {
+
+	public static void main(String[] args) throws InterruptedException {
+
+		Scanner myObj = new Scanner(System.in);
+		System.out.println("");
+		System.out.println("               -------------------------------------             ");
+		System.out.println("             -----------------------------------------             ");
+		System.out.println("               -------------------------------------             ");
+		System.out.println("");
+		System.out.println("WELCOME TO MY ELEVATOR PROGRAM, YOU CAN SEE BELOW THERE IS A GENERATED SCENARIO");
+
+		int yourStair = Scenario.GenerateRandomStair();
+		System.out.println("You are at the stair number : " + yourStair);
+		int[] users = Scenario.GenerateRandomUsers();
+		System.out.println("There is : " + users.length + " persons in the elevator");
+		System.out.println("");
+
+		Elevator elevator = new Elevator(users.length, false, yourStair, null);
+		String[] result = elevator.setControlPanel(Building.getTotalstairs(), Building.getNegativestairs());
+
+		if (users.length == Elevator.getMaximumUsers()) {
+			System.out
+					.println("THE ELEVATOR IS FULL YOUR REQUEST IS RECORD JUST WAIT FOR THE USER NUMBER TO BE UNDER 5");
+			System.out.println("Wait...");
+			Timer timer = new Timer();
+			int begin = 0;
+			int timeInterval = 1000;
+			timer.schedule(new TimerTask() {
+				int counter = 0;
+
+				@Override
+				public void run() {
+					System.out.println("....");
+					counter++;
+					if (counter >= 5) {
+						timer.cancel();
+					}
+				}
+			}, begin, timeInterval);
+
+		}
+
+		elevator.setPositionDoor(true);
+		if (!elevator.isPositionDoor()) {
+			System.out.println("Door is closed wait...");
+			elevator.setPositionDoor(true);
+		}
+		//myObj.close();
+		myObj.wait(100000);
+
+		System.out.println("----///Door is OPEN///----");
+		System.out.println("Please come in and select the stair's number you want to reach :");
+		System.out.println("Control panel : " + Arrays.toString(result));
+
+		String stairToReach = myObj.nextLine();
+
+		System.out.println("you go to : " + stairToReach);
+		elevator.setPositionDoor(false);
+		if (!elevator.isPositionDoor()) {
+			System.out.println("---///Door is CLOSED///---");
+
+			int actualStair = yourStair;
+			if (actualStair < Integer.parseInt(stairToReach)) {
+				MoveElevator.goUp(stairToReach, actualStair);
+			} else {
+				MoveElevator.goDown(stairToReach, actualStair);
+			}
+
+		} else {
+			System.out.println("Door is still open .. Wait");
+			elevator.setPositionDoor(false);
+			System.out.println("---///Door is CLOSED///---");
+			int actualStair = yourStair;
+			if (actualStair < Integer.parseInt(stairToReach)) {
+				MoveElevator.goUp(stairToReach, actualStair);
+			} else {
+				MoveElevator.goDown(stairToReach, actualStair);
+			}
+		}
+
+//		String stairToReach1 = myObj.nextLine();
+//		if (stairToReach1.equalsIgnoreCase("in")) {
+//			System.out.println("methode a venir");
+//		} else {
+//		myObj.close();
+//		}
+		myObj.close();
+	}
+
+}

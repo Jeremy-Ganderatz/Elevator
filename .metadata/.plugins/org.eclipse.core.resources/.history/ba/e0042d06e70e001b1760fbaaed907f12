@@ -1,0 +1,10 @@
+package objects;
+
+public class Building {
+	
+	private static final int positiveStairs = 10;
+	private static final int startPosition = 0;
+	private static final int negativeStairs = -2;
+	
+
+}

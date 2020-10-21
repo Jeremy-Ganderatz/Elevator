@@ -1,0 +1,67 @@
+package Service;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+public abstract class MoveElevator implements Runnable {
+
+	public static void goUp(String floorToReach, int yourStair, int[]users) {
+		Timer timer = new Timer();
+		int begin = 1000;
+		int timeInterval = 2000;
+		timer.schedule(new TimerTask() {
+			int counter = 0;
+			int actualStair = yourStair;
+			
+			@Override
+			public void run() {
+				if (users.contains(yourStair) ) {
+					
+				}
+				System.out.println("stair : " + actualStair);
+				actualStair++;
+
+				if (counter == Math.abs(yourStair - Integer.parseInt(floorToReach))) {
+					System.out
+							.println("YOU ARRIVE AT STAIR NUMBER : " + floorToReach + "  --- Bye Bye !!! ---");
+					timer.cancel();
+				}
+				counter++;
+			}
+		}, begin, timeInterval);
+	}
+
+	public static void goDown(String stairToReach, int yourStair) {
+		Timer timer = new Timer();
+		int begin = 1000;
+		int timeInterval = 2000;
+		timer.schedule(new TimerTask() {
+			int counter = 0;
+			int actualStair = yourStair;
+
+			@Override
+			public void run() {
+				System.out.println("stair : " + actualStair);
+				actualStair--;
+
+				if (counter == Math.abs(yourStair - Integer.parseInt(stairToReach))) {
+					System.out
+							.println("YOU ARRIVE AT STAIR NUMBER : " + stairToReach + "  --- Bye Bye !!! ---");
+					timer.cancel();
+				}
+				counter++;
+			}
+		}, begin, timeInterval);
+	}
+	
+	
+	public String convertIntToString(int[]board) {
+		String[] resultStr = new String[board.length];
+		for (String i : board) {
+			resultStr = String.valueOf(i);
+		}
+		
+		return resultStr;
+		
+	}
+}

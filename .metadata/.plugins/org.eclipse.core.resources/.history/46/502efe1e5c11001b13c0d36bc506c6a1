@@ -1,0 +1,41 @@
+package Service;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class ChekingNbOfUsers implements Runnable {
+	private volatile boolean exit = false;
+
+	@Override
+	public void run() {
+
+		while (!exit) {
+
+			System.out
+					.println("THE ELEVATOR IS FULL YOUR REQUEST IS RECORD JUST WAIT FOR THE USER NUMBER TO BE UNDER 5");
+			System.out.println("Wait...");
+			Timer timer = new Timer();
+			int begin = 0;
+			int timeInterval = 1000;
+			timer.schedule(new TimerTask() {
+				int counter = 0;
+
+				@Override
+				public void run() {
+					System.out.println("....");
+					counter++;
+					if (counter >= 5) {
+						timer.cancel();
+						
+					}
+				}
+			}, begin, timeInterval);
+		}
+		stop();
+	}
+
+	public void stop() {
+		exit = true;
+	}
+
+}
